@@ -6,8 +6,8 @@
 #include <rpcWiFi.h>
 #include <WiFiClient.h>
 
-char ssid[] = "xxx";
-char password[] = "xxx";
+const char *ssid = "xxx";
+const char *password = "xxx";
 
 void restartMCU() {
   NVIC_SystemReset();
