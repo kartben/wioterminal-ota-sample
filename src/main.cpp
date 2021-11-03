@@ -17,8 +17,6 @@ void restartMCU() {
 #define OTA_FATAL(...) { DEBUG_PRINT(__VA_ARGS__); delay(1000); restartMCU(); }
 
 
-String overTheAirURL;
-
 bool parseURL(String url, String& protocol, String& host, int& port, String& uri)
 {
   int index = url.indexOf(':');
@@ -54,13 +52,13 @@ bool parseURL(String url, String& protocol, String& host, int& port, String& uri
   return true;
 }
 
-void enterOTA() {
+void enterOTA(String packageURI) {
   String protocol, host, url;
   int port;
   
-  DEBUG_PRINT(String("OTA: ") + overTheAirURL);
+  DEBUG_PRINT(String("OTA: ") + packageURI);
 
-  if (!parseURL(overTheAirURL, protocol, host, port, url)) {
+  if (!parseURL(packageURI, protocol, host, port, url)) {
     OTA_FATAL(F("Cannot parse URL"));
   }
 
@@ -148,9 +146,7 @@ void setup() {
 
   Serial.println("Performing OTA");
 
-  overTheAirURL = "http://198.27.66.207:8000/wio.bin" ;
-
-  enterOTA();
+  enterOTA("http://198.27.66.207:8000/wio.bin");
 
 }
  
